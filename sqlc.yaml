@@ -1,0 +1,67 @@
+version:
+  "2" # This specifies the configuration file format version.
+  # "1" is older, "2" is the current recommended version.
+
+sql:
+  - engine: "postgresql" # Or "mysql", "sqlite", etc. This specifies the database type.
+    queries: "./db/query/" # Path to the directory containing your SQL query files (.sql files). You can also list specific files: - "./db/query/users.sql"
+    schema: "./db/migration/000001_init_schema.up.sql" # Path to the directory containing your SQL schema files (.sql files).
+    # These files define your tables, indexes, etc.
+    # You can also list specific files: - "./db/schema/001_init.sql"
+    gen:
+      go:
+        package:
+          "db" # The name of the Go package for the generated code.
+          # This will typically be imported as `your_project/db`.
+        out:
+          "./db/sqlc" # The directory where the generated Go files will be placed.
+          # This directory will contain files like `query.sql.go`, `models.go`, etc.
+        emit_interface:
+          false # Set to true to generate an interface for the Queries struct.
+          # Useful for mocking in tests. Default is false.
+        emit_json_tags: true # Set to true to add JSON tags to generated Go structs. Default is false.
+        emit_prepared_queries: false # Set to true to generate methods that prepare statements. Default is false.
+        emit_exact_table_names:
+          false # Set to true to use exact table names for models instead of singularizing.
+          # E.g., `Users` instead of `User`. Default is false.
+        # emit_empty_slices: false # Set to true to emit empty slices for `[]byte` columns. Default is false.
+        # emit_enum_pointers: false # Set to true to generate pointers for enum types. Default is false.
+        # emit_params_pointers: false # Set to true to generate pointers for parameters in generated functions. Default is false.
+        # emit_result_pointers: false # Set to true to generate pointers for results in generated functions. Default is false.
+        # emit_db_tags: false # Set to true to add `db` tags to generated Go structs. Default is false.
+        # emit_exported_queries: false # Set to true to export the Queries struct and functions. Default is false.
+        # json_tags_case_style: "camel" # "pascal", "camel", "snake", "kebab". Default is "snake".
+        # sql_package: "database/sql" # Or "pgx/v5". Specifies which SQL driver package to use for type mapping.
+        # "pgx/v5" is for github.com/jackc/pgx/v5.
+        # use_global_readers: false # Set to true to use global readers for generated code. Default is false.
+        # build_tags: "sqlc" # Add custom build tags to generated files.
+
+        # Overrides allow you to map specific database types to custom Go types.
+        # This is useful for types like UUIDs, JSONB, or custom enums.
+        # For example, using "github.com/google/uuid".UUID for a PostgreSQL UUID type.
+        overrides:
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.UUID"
+          - db_type: "jsonb"
+            go_type:
+              import: "github.com/jackc/pgx/v5/pgtype"
+              type: "JSONB" # Or a custom struct if you parse JSONB yourself
+          # Example for a custom enum type in your schema:
+          # - db_type: "status" # This is your custom enum type in SQL (e.g., CREATE TYPE status AS ENUM ('active', 'inactive');)
+          #   go_type:
+          #     type: "Status" # This will be the generated Go type name for the enum
+          #     package: "your_project/models" # Optional: if you want the enum type in a separate package
+
+        # Renames allow you to customize the naming of generated structs/fields.
+        # renames:
+        # Table renames
+        # - db: "users"
+        #   go: "User" # Renames the 'users' table model to 'User'
+
+        # Column renames within a specific table
+        # - db: "users.email_address"
+        #   go: "Email"
+
+        # Global column renames (applies to all tables)
+        # - db: "created_at"
+        #   go: "CreatedAt"
