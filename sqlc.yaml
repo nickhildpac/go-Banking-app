@@ -16,8 +16,7 @@ sql:
         out:
           "./db/sqlc" # The directory where the generated Go files will be placed.
           # This directory will contain files like `query.sql.go`, `models.go`, etc.
-        emit_interface:
-          false # Set to true to generate an interface for the Queries struct.
+        emit_interface: true # Set to true to generate an interface for the Queries struct.
           # Useful for mocking in tests. Default is false.
         emit_json_tags: true # Set to true to add JSON tags to generated Go structs. Default is false.
         emit_prepared_queries: false # Set to true to generate methods that prepare statements. Default is false.
