@@ -24,7 +24,7 @@ sql:
         emit_exact_table_names:
           false # Set to true to use exact table names for models instead of singularizing.
           # E.g., `Users` instead of `User`. Default is false.
-        # emit_empty_slices: false # Set to true to emit empty slices for `[]byte` columns. Default is false.
+        emit_empty_slices: true # Set to true to emit empty slices for `[]byte` columns. Default is false.
         # emit_enum_pointers: false # Set to true to generate pointers for enum types. Default is false.
         # emit_params_pointers: false # Set to true to generate pointers for parameters in generated functions. Default is false.
         # emit_result_pointers: false # Set to true to generate pointers for results in generated functions. Default is false.
