@@ -19,11 +19,11 @@ func TestTransferTx(t *testing.T) {
 	errs := make(chan error)
 	results := make(chan TransferTxResult)
 
-	for i := range n {
-		txName := fmt.Sprintf("ts %d", i+1)
+	for range n {
+		// txName := fmt.Sprintf("ts %d", i+1)
 		go func() {
-			ctx := context.WithValue(context.Background(), txKey, txName)
-			result, err := store.TransferTx(ctx, TransferTxParams{
+			// ctx := context.WithValue(context.Background(), txKey, txName)
+			result, err := store.TransferTx(context.Background(), TransferTxParams{
 				FromAccountID: account1.ID,
 				ToAccountID:   account2.ID,
 				Amount:        amount,

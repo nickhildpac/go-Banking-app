@@ -5,14 +5,10 @@ import (
 	"log"
 	"os"
 	"testing"
+
 	"github.com/nickhildpac/simplebank/util"
 
 	_ "github.com/lib/pq"
-)
-
-const (
-	dbDriver = "postgres"
-	dbSource = "postgresql://root:postgres@localhost:5432/simple_bank?sslmode=disable"
 )
 
 var testQueries *Queries
