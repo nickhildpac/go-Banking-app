@@ -5,7 +5,9 @@ version:
 sql:
   - engine: "postgresql" # Or "mysql", "sqlite", etc. This specifies the database type.
     queries: "./db/query/" # Path to the directory containing your SQL query files (.sql files). You can also list specific files: - "./db/query/users.sql"
-    schema: "./db/migration/000001_init_schema.up.sql" # Path to the directory containing your SQL schema files (.sql files).
+    schema: 
+      - "./db/migration/000001_init_schema.up.sql"
+      - "./db/migration/000002_add_users.up.sql" # Path to the directory containing your SQL schema files (.sql files).
     # These files define your tables, indexes, etc.
     # You can also list specific files: - "./db/schema/001_init.sql"
     gen:
